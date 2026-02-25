@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/pin_pad.dart';
@@ -44,11 +45,12 @@ class _AuthScreenState extends State<AuthScreen> {
     final auth = Provider.of<AuthProvider>(context, listen: false);
     bool isValid = await auth.verifyPin(pin);
     if (!isValid && mounted) {
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Incorrect PIN'),
+        SnackBar(
+          content: Text(l10n.incorrectPin),
           backgroundColor: Colors.red,
-          duration: Duration(seconds: 1),
+          duration: const Duration(seconds: 1),
         ),
       );
     }
@@ -57,6 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
+    final l10n = AppLocalizations.of(context)!;
     final lockoutEnd = auth.lockoutEndTime;
     final isLocked = lockoutEnd != null && DateTime.now().isBefore(lockoutEnd);
 
@@ -77,7 +80,7 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              isLocked ? 'Locked for ${secondsRemaining}s' : 'Enter PIN',
+              isLocked ? l10n.lockedForSeconds(secondsRemaining) : l10n.enterPin,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -88,7 +91,7 @@ class _AuthScreenState extends State<AuthScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Text(
-                  '${5 - auth.failedAttempts} attempts remaining',
+                  l10n.attemptsRemaining(5 - auth.failedAttempts),
                   style: const TextStyle(color: Colors.orange),
                 ),
               ),

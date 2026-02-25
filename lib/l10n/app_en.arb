@@ -1,0 +1,220 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Flauth",
+  "scan": "Scan",
+  "importExport": "Import / Export",
+  "about": "About",
+
+  "noAccountsYet": "No accounts yet",
+  "tapToScanQr": "Tap the button below to scan a QR code",
+
+  "protectYourAccounts": "Protect your accounts",
+  "protectYourAccountsDesc": "It is highly recommended to set up a PIN to secure your 2FA tokens. Would you like to do it now?",
+  "later": "Later",
+  "setupNow": "Setup Now",
+
+  "security": "Security",
+  "pinProtection": "PIN Protection",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "changePin": "Change PIN",
+  "biometricUnlock": "Biometric Unlock",
+  "biometricSubtitle": "Use FaceID / Fingerprint",
+  "usePinForBackup": "Use PIN for Backup",
+  "usePinForBackupSubtitle": "Automatically use your App PIN to encrypt/decrypt backups",
+  "setNewPin": "Set New PIN",
+  "confirmPin": "Confirm PIN",
+  "enterSixDigitPin": "Enter 6-digit PIN",
+  "reEnterToConfirm": "Re-enter to confirm",
+  "pinSetSuccessfully": "PIN Set Successfully",
+  "pinsDoNotMatch": "PINs do not match. Try again.",
+
+  "enterPin": "Enter PIN",
+  "incorrectPin": "Incorrect PIN",
+  "lockedForSeconds": "Locked for {seconds}s",
+  "@lockedForSeconds": {
+    "placeholders": {
+      "seconds": { "type": "int" }
+    }
+  },
+  "attemptsRemaining": "{count} attempts remaining",
+  "@attemptsRemaining": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "scanQrCode": "Scan QR Code",
+  "startScanning": "Start Scanning",
+  "cancel": "Cancel",
+  "flashOn": "Flash On",
+  "flashOff": "Flash Off",
+  "cameraPermissionRequired": "Camera permission is required to scan QR codes",
+  "invalidQrCode": "Invalid QR Code: Not an authenticator URI",
+  "scanError": "Scan error: {error}",
+  "@scanError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "failedToStartScanner": "Failed to start scanner: {error}",
+  "@failedToStartScanner": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "addedAccount": "Added account: {name}",
+  "@addedAccount": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "accountAlreadyExists": "Account already exists: {name}",
+  "@accountAlreadyExists": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "failedToAddAccount": "Failed to add account: {error}",
+  "@failedToAddAccount": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "deleteAccount": "Delete Account",
+  "deleteAccountConfirm": "Are you sure you want to delete this account? This cannot be undone.",
+  "delete": "Delete",
+  "accountDeleted": "{name} deleted",
+  "@accountDeleted": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "codeRevealedAndCopied": "Code revealed and copied to clipboard",
+
+  "backupAndRestore": "Backup & Restore",
+  "localFile": "Local File",
+  "webdavCloud": "WebDAV Cloud",
+  "webdavSettings": "WebDAV Settings",
+  "localStorage": "Local Storage",
+  "localStorageDesc": "Save backups to your device or import from local files.",
+  "exportToFile": "Export to File",
+  "importFromFile": "Import from File",
+  "webdavCloudDesc": "Sync backups with your private cloud (Nextcloud, InfiniCloud etc).",
+  "uploadToCloud": "Upload to Cloud",
+  "restoreFromCloud": "Restore from Cloud",
+  "cloud": "Cloud",
+  "synced": "Synced",
+
+  "noAccountsToExport": "No accounts to export",
+  "encryptedWithAppPin": "Encrypted with App PIN",
+  "encryptionFailed": "Encryption failed: {error}",
+  "@encryptionFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "backupSavedSuccessfully": "Backup saved successfully",
+  "savedToFiles": "Saved to \"Files\" App > On My iPhone > Flauth",
+  "savedTo": "Saved to: {path}",
+  "@savedTo": {
+    "placeholders": {
+      "path": { "type": "String" }
+    }
+  },
+  "saveBackupFile": "Save Backup File",
+  "exportFailed": "Export failed: {error}",
+  "@exportFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "importedAccounts": "Successfully imported {count} new accounts",
+  "@importedAccounts": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "noNewAccountsAdded": "No new accounts added (duplicates or empty)",
+  "importFailed": "Import failed: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "pleaseConfigureWebdav": "Please configure WebDAV first",
+  "uploadedSuccessfully": "Uploaded successfully",
+  "uploadFailed": "Upload failed: {error}",
+  "@uploadFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "syncedAccounts": "Successfully synced {count} new accounts",
+  "@syncedAccounts": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "alreadyUpToDate": "Already up to date. No new accounts found in Cloud.",
+  "downloadFailed": "Download failed: {error}",
+  "@downloadFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "decryptionFailed": "Decryption failed: {error}",
+  "@decryptionFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "encryptBackup": "Encrypt Backup?",
+  "encryptBackupDesc": "Protect your backup with a password. If you lose this password, you cannot restore your accounts.",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "minSixCharacters": "Min 6 characters",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "skipPlainText": "Skip (Plain Text)",
+  "encrypt": "Encrypt",
+  "decryptBackup": "Decrypt Backup",
+  "fileIsEncrypted": "This file is encrypted. Please enter the password.",
+  "unlock": "Unlock",
+
+  "securitySettings": "Security Settings",
+  "setupPinBiometrics": "Setup PIN & Biometrics",
+  "github": "GitHub",
+  "githubUrl": "github.com/jiacai2050/flauth",
+  "feedbackAndSupport": "Feedback & Support",
+  "appDescription": "A privacy-first, fully open-source TOTP authenticator for Android, macOS, Windows, and Linux.",
+  "version": "Version {version} ({buildNumber})",
+  "@version": {
+    "placeholders": {
+      "version": { "type": "String" },
+      "buildNumber": { "type": "String" }
+    }
+  },
+  "loading": "Loading...",
+
+  "webdavConfiguration": "WebDAV Configuration",
+  "serverUrl": "Server URL",
+  "username": "Username",
+  "remotePath": "Remote Path (Optional)",
+  "leaveEmptyForRoot": "Leave empty for root directory",
+  "fullBackupPathPreview": "Full Backup Path Preview:",
+  "pleaseEnterServerUrl": "Please enter server URL",
+  "urlIsRequired": "URL is required",
+  "usernameIsRequired": "Username is required",
+  "passwordIsRequired": "Password is required",
+  "testConnectionAndSave": "Test Connection & Save",
+  "connectionSuccessful": "Connection successful & Saved!",
+  "connectionFailed": "Connection failed: {error}",
+  "@connectionFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  }
+}

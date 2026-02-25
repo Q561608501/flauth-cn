@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../models/account.dart';
 import '../providers/account_provider.dart';
@@ -18,6 +19,7 @@ class _AccountTileState extends State<AccountTile> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     // Optimization: Only rebuild when remainingSeconds changes (once per second)
     final remainingSeconds = context.select<AccountProvider, int>(
       (p) => p.remainingSeconds,
@@ -45,18 +47,16 @@ class _AccountTileState extends State<AccountTile> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text("Delete Account"),
-              content: const Text(
-                "Are you sure you want to delete this account? This cannot be undone.",
-              ),
+              title: Text(l10n.deleteAccount),
+              content: Text(l10n.deleteAccountConfirm),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text("Cancel"),
+                  child: Text(l10n.cancel),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text("Delete"),
+                  child: Text(l10n.delete),
                 ),
               ],
             );
@@ -66,7 +66,7 @@ class _AccountTileState extends State<AccountTile> {
       onDismissed: (direction) {
         provider.deleteAccount(widget.account.id);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${widget.account.name} deleted')),
+          SnackBar(content: Text(l10n.accountDeleted(widget.account.name))),
         );
       },
       child: Card(
@@ -82,9 +82,9 @@ class _AccountTileState extends State<AccountTile> {
               Clipboard.setData(ClipboardData(text: code));
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Code revealed and copied to clipboard'),
-                  duration: Duration(seconds: 1),
+                SnackBar(
+                  content: Text(l10n.codeRevealedAndCopied),
+                  duration: const Duration(seconds: 1),
                 ),
               );
             }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'security_screen.dart';
@@ -26,14 +27,15 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('About')),
+      appBar: AppBar(title: Text(l10n.about)),
       body: FutureBuilder<PackageInfo>(
         future: PackageInfo.fromPlatform(),
         builder: (context, snapshot) {
           final version = snapshot.hasData
-              ? 'Version ${snapshot.data!.version} (${snapshot.data!.buildNumber})'
-              : 'Loading...';
+              ? l10n.version(snapshot.data!.version, snapshot.data!.buildNumber)
+              : l10n.loading;
 
           return ListView(
             padding: const EdgeInsets.all(24.0),
@@ -61,15 +63,15 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
-              const Text(
-                'A privacy-first, fully open-source TOTP authenticator for Android, macOS, Windows, and Linux.',
+              Text(
+                l10n.appDescription,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
               ListTile(
                 leading: const Icon(Icons.security),
-                title: const Text('Security Settings'),
-                subtitle: const Text('Setup PIN & Biometrics'),
+                title: Text(l10n.securitySettings),
+                subtitle: Text(l10n.setupPinBiometrics),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -81,14 +83,14 @@ class AboutScreen extends StatelessWidget {
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.code),
-                title: const Text('GitHub'),
-                subtitle: const Text('github.com/jiacai2050/flauth'),
+                title: Text(l10n.github),
+                subtitle: Text(l10n.githubUrl),
                 onTap: () => _launchUrl('https://github.com/jiacai2050/flauth'),
                 trailing: const Icon(Icons.open_in_new, size: 16),
               ),
               ListTile(
                 leading: const Icon(Icons.email),
-                title: const Text('Feedback & Support'),
+                title: Text(l10n.feedbackAndSupport),
                 subtitle: const Text('dev@liujiacai.net'),
                 onTap: _launchEmail,
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),

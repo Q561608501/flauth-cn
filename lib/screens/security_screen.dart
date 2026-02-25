@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/pin_pad.dart';
@@ -17,12 +18,13 @@ class _SecurityScreenState extends State<SecurityScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
+    final l10n = AppLocalizations.of(context)!;
 
     // If user is in the process of setting a new PIN
     if (_isSettingPin) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(_tempPin.isEmpty ? 'Set New PIN' : 'Confirm PIN'),
+          title: Text(_tempPin.isEmpty ? l10n.setNewPin : l10n.confirmPin),
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () {
@@ -38,7 +40,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                _tempPin.isEmpty ? 'Enter 6-digit PIN' : 'Re-enter to confirm',
+                _tempPin.isEmpty ? l10n.enterSixDigitPin : l10n.reEnterToConfirm,
                 style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 32),
@@ -65,13 +67,13 @@ class _SecurityScreenState extends State<SecurityScreen> {
                           _tempPin = '';
                         });
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('PIN Set Successfully')),
+                          SnackBar(content: Text(l10n.pinSetSuccessfully)),
                         );
                       } else {
                         // Mismatch
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('PINs do not match. Try again.'),
+                          SnackBar(
+                            content: Text(l10n.pinsDoNotMatch),
                           ),
                         );
                         setState(() {
@@ -90,12 +92,12 @@ class _SecurityScreenState extends State<SecurityScreen> {
 
     // Main Security Settings List
     return Scaffold(
-      appBar: AppBar(title: const Text('Security')),
+      appBar: AppBar(title: Text(l10n.security)),
       body: ListView(
         children: [
           ListTile(
-            title: const Text('PIN Protection'),
-            subtitle: Text(auth.hasPin ? 'Enabled' : 'Disabled'),
+            title: Text(l10n.pinProtection),
+            subtitle: Text(auth.hasPin ? l10n.enabled : l10n.disabled),
             trailing: Switch(
               value: auth.hasPin,
               onChanged: (val) {
@@ -116,7 +118,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
           if (auth.hasPin) ...[
             const Divider(),
             ListTile(
-              title: const Text('Change PIN'),
+              title: Text(l10n.changePin),
               trailing: const Icon(Icons.chevron_right),
               onTap: () {
                 setState(() {
@@ -125,8 +127,8 @@ class _SecurityScreenState extends State<SecurityScreen> {
               },
             ),
             SwitchListTile(
-              title: const Text('Biometric Unlock'),
-              subtitle: const Text('Use FaceID / Fingerprint'),
+              title: Text(l10n.biometricUnlock),
+              subtitle: Text(l10n.biometricSubtitle),
               value: auth.isBiometricEnabled,
               onChanged: (val) {
                 auth.toggleBiometrics(val);
@@ -134,10 +136,8 @@ class _SecurityScreenState extends State<SecurityScreen> {
             ),
             const Divider(),
             SwitchListTile(
-              title: const Text('Use PIN for Backup'),
-              subtitle: const Text(
-                'Automatically use your App PIN to encrypt/decrypt backups',
-              ),
+              title: Text(l10n.usePinForBackup),
+              subtitle: Text(l10n.usePinForBackupSubtitle),
               value: auth.isUsePinForBackupEnabled,
               onChanged: (val) {
                 auth.toggleUsePinForBackup(val);

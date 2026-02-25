@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -111,7 +112,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
     final rawText = accountProvider.exportAccountsToText();
 
     if (rawText.isEmpty) {
-      _showSnackBar('No accounts to export');
+      _showSnackBar(AppLocalizations.of(context)!.noAccountsToExport);
       return null;
     }
 
@@ -140,10 +141,10 @@ class _ImportExportScreenState extends State<ImportExportScreen>
       try {
         finalContent = BackupSecurityService.encrypt(rawText, password);
         if (usingAppPin) {
-          _showSnackBar('Encrypted with App PIN');
+          _showSnackBar(AppLocalizations.of(context)!.encryptedWithAppPin);
         }
       } catch (e) {
-        _showSnackBar('Encryption failed: $e', isError: true);
+        _showSnackBar(AppLocalizations.of(context)!.encryptionFailed(e.toString()), isError: true);
         return null;
       }
     }
@@ -178,7 +179,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
       try {
         return BackupSecurityService.decrypt(content, password);
       } catch (e) {
-        _showSnackBar('Decryption failed: $e', isError: true);
+        _showSnackBar(AppLocalizations.of(context)!.decryptionFailed(e.toString()), isError: true);
         return null;
       }
     }
@@ -210,7 +211,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
         final finalPath = await FlutterFileDialog.saveFile(params: params);
 
         if (finalPath != null) {
-          _showSnackBar('Backup saved successfully');
+          _showSnackBar(AppLocalizations.of(context)!.backupSavedSuccessfully);
         }
       } else if (Platform.isIOS) {
         // iOS: Save to Documents
@@ -219,11 +220,11 @@ class _ImportExportScreenState extends State<ImportExportScreen>
         final file = File(outputPath);
         await file.writeAsString(exportData.content);
 
-        _showSnackBar('Saved to "Files" App > On My iPhone > Flauth');
+        _showSnackBar(AppLocalizations.of(context)!.savedToFiles);
       } else {
         // Desktop: Use Save Dialog
         final outputPath = await FilePicker.platform.saveFile(
-          dialogTitle: 'Save Backup File',
+          dialogTitle: AppLocalizations.of(context)!.saveBackupFile,
           fileName: fileName,
           type: FileType.custom,
           allowedExtensions: [exportData.extension],
@@ -232,12 +233,12 @@ class _ImportExportScreenState extends State<ImportExportScreen>
         if (outputPath != null) {
           final file = File(outputPath);
           await file.writeAsString(exportData.content);
-          _showSnackBar('Saved to: $outputPath');
+          _showSnackBar(AppLocalizations.of(context)!.savedTo(outputPath));
         }
       }
     } catch (e) {
       debugPrint('Export error: $e');
-      _showSnackBar('Export failed: ${e.toString()}', isError: true);
+      _showSnackBar(AppLocalizations.of(context)!.exportFailed(e.toString()), isError: true);
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -264,17 +265,17 @@ class _ImportExportScreenState extends State<ImportExportScreen>
         final count = await provider.importAccountsFromText(decryptedContent);
 
         if (count > 0) {
-          _showSnackBar('Successfully imported $count new accounts');
+          _showSnackBar(AppLocalizations.of(context)!.importedAccounts(count));
         } else {
           _showSnackBar(
-            'No new accounts added (duplicates or empty)',
+            AppLocalizations.of(context)!.noNewAccountsAdded,
             backgroundColor: Colors.orange,
           );
         }
       }
     } catch (e) {
       debugPrint('Import error: $e');
-      _showSnackBar('Import failed: ${e.toString()}', isError: true);
+      _showSnackBar(AppLocalizations.of(context)!.importFailed(e.toString()), isError: true);
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -286,7 +287,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
     final provider = Provider.of<AccountProvider>(context, listen: false);
     final config = await provider.getWebDavConfig();
     if (config == null || config['url'] == null) {
-      _showSnackBar('Please configure WebDAV first');
+      _showSnackBar(AppLocalizations.of(context)!.pleaseConfigureWebdav);
       _openWebDavConfig();
       return null;
     }
@@ -314,7 +315,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
       if (!mounted) return;
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        _showSnackBar('Uploaded successfully');
+        _showSnackBar(AppLocalizations.of(context)!.uploadedSuccessfully);
         final accountProvider = Provider.of<AccountProvider>(
           context,
           listen: false,
@@ -325,7 +326,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
         throw Exception('Status ${response.statusCode}: ${response.body}');
       }
     } catch (e) {
-      _showSnackBar('Upload failed: $e', isError: true);
+      _showSnackBar(AppLocalizations.of(context)!.uploadFailed(e.toString()), isError: true);
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -350,10 +351,10 @@ class _ImportExportScreenState extends State<ImportExportScreen>
 
         provider.updateLastSyncTime();
         if (count > 0) {
-          _showSnackBar('Successfully synced $count new accounts');
+          _showSnackBar(AppLocalizations.of(context)!.syncedAccounts(count));
         } else {
           _showSnackBar(
-            'Already up to date. No new accounts found in Cloud.',
+            AppLocalizations.of(context)!.alreadyUpToDate,
             backgroundColor: Colors.orange,
           );
         }
@@ -361,7 +362,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
         throw Exception('Status ${response.statusCode}: ${response.body}');
       }
     } catch (e) {
-      _showSnackBar('Download failed: $e', isError: true);
+      _showSnackBar(AppLocalizations.of(context)!.downloadFailed(e.toString()), isError: true);
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -386,17 +387,18 @@ class _ImportExportScreenState extends State<ImportExportScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Backup & Restore'),
+        title: Text(l10n.backupAndRestore),
 
         bottom: TabBar(
           controller: _tabController,
 
-          tabs: const [
-            Tab(text: 'Local File', icon: Icon(Icons.folder)),
+          tabs: [
+            Tab(text: l10n.localFile, icon: const Icon(Icons.folder)),
 
-            Tab(text: 'WebDAV Cloud', icon: Icon(Icons.cloud)),
+            Tab(text: l10n.webdavCloud, icon: const Icon(Icons.cloud)),
           ],
         ),
 
@@ -404,7 +406,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: _openWebDavConfig,
-            tooltip: 'WebDAV Settings',
+            tooltip: l10n.webdavSettings,
           ),
         ],
       ),
@@ -416,12 +418,12 @@ class _ImportExportScreenState extends State<ImportExportScreen>
           // Local Tab
           _buildActionView(
             icon: Icons.sd_storage,
-            title: 'Local Storage',
-            desc: 'Save backups to your device or import from local files.',
-            btn1Text: 'Export to File',
+            title: l10n.localStorage,
+            desc: l10n.localStorageDesc,
+            btn1Text: l10n.exportToFile,
             btn1Icon: Icons.upload_file,
             btn1Action: _handleLocalExport,
-            btn2Text: 'Import from File',
+            btn2Text: l10n.importFromFile,
             btn2Icon: Icons.drive_folder_upload,
             btn2Action: _handleLocalImport,
           ),
@@ -431,13 +433,12 @@ class _ImportExportScreenState extends State<ImportExportScreen>
             selector: (_, p) => p.lastWebDavSyncTime,
             builder: (context, lastSync, _) => _buildActionView(
               icon: Icons.cloud_sync,
-              title: 'WebDAV Cloud',
-              desc:
-                  'Sync backups with your private cloud (Nextcloud, InfiniCloud etc).',
-              btn1Text: 'Upload to Cloud',
+              title: l10n.webdavCloud,
+              desc: l10n.webdavCloudDesc,
+              btn1Text: l10n.uploadToCloud,
               btn1Icon: Icons.cloud_upload,
               btn1Action: _handleWebDavUpload,
-              btn2Text: 'Restore from Cloud',
+              btn2Text: l10n.restoreFromCloud,
               btn2Icon: Icons.cloud_download,
               btn2Action: _handleWebDavDownload,
               extra: Padding(
@@ -451,14 +452,14 @@ class _ImportExportScreenState extends State<ImportExportScreen>
                       _buildTimeBadge(
                         context,
                         Icons.cloud_done_outlined,
-                        'Cloud',
+                        l10n.cloud,
                         _lastCloudBackupTime!,
                       ),
                     if (lastSync != null)
                       _buildTimeBadge(
                         context,
                         Icons.sync_alt_outlined,
-                        'Synced',
+                        l10n.synced,
                         DateFormat.yMMMd().add_Hms().format(lastSync),
                       ),
                   ],
@@ -591,50 +592,51 @@ class _SetPasswordDialogState extends State<_SetPasswordDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Encrypt Backup?'),
+      title: Text(l10n.encryptBackup),
       content: Form(
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Protect your backup with a password. If you lose this password, you cannot restore your accounts.',
-              style: TextStyle(fontSize: 13, color: Colors.grey),
+            Text(
+              l10n.encryptBackupDesc,
+              style: const TextStyle(fontSize: 13, color: Colors.grey),
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _passCtrl,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.password,
+                border: const OutlineInputBorder(),
               ),
               obscureText: true,
               validator: (val) =>
-                  (val == null || val.length < 6) ? 'Min 6 characters' : null,
+                  (val == null || val.length < 6) ? l10n.minSixCharacters : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _confirmCtrl,
-              decoration: const InputDecoration(
-                labelText: 'Confirm Password',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.confirmPassword,
+                border: const OutlineInputBorder(),
               ),
               obscureText: true,
               validator: (val) =>
-                  val != _passCtrl.text ? 'Passwords do not match' : null,
+                  val != _passCtrl.text ? l10n.passwordsDoNotMatch : null,
             ),
           ],
         ),
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.pop(context), // Cancel export
-          child: const Text('Cancel'),
+          onPressed: () => Navigator.pop(context),
+          child: Text(l10n.cancel),
         ),
         TextButton(
-          onPressed: () => Navigator.pop(context, ''), // Skip encryption
-          child: const Text('Skip (Plain Text)'),
+          onPressed: () => Navigator.pop(context, ''),
+          child: Text(l10n.skipPlainText),
         ),
         FilledButton(
           onPressed: () {
@@ -642,7 +644,7 @@ class _SetPasswordDialogState extends State<_SetPasswordDialog> {
               Navigator.pop(context, _passCtrl.text.trim());
             }
           },
-          child: const Text('Encrypt'),
+          child: Text(l10n.encrypt),
         ),
       ],
     );
@@ -667,18 +669,19 @@ class _EnterPasswordDialogState extends State<_EnterPasswordDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Decrypt Backup'),
+      title: Text(l10n.decryptBackup),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('This file is encrypted. Please enter the password.'),
+          Text(l10n.fileIsEncrypted),
           const SizedBox(height: 16),
           TextField(
             controller: _passCtrl,
-            decoration: const InputDecoration(
-              labelText: 'Password',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n.password,
+              border: const OutlineInputBorder(),
             ),
             obscureText: true,
             autofocus: true,
@@ -689,11 +692,11 @@ class _EnterPasswordDialogState extends State<_EnterPasswordDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text(l10n.cancel),
         ),
         FilledButton(
           onPressed: () => Navigator.pop(context, _passCtrl.text),
-          child: const Text('Unlock'),
+          child: Text(l10n.unlock),
         ),
       ],
     );

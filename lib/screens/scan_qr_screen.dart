@@ -1,5 +1,6 @@
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../models/account.dart';
@@ -35,6 +36,8 @@ class _ScanQrScreenState extends State<ScanQrScreen> {
       _isScanning = true;
     });
 
+    final l10n = AppLocalizations.of(context)!;
+
     try {
       // Explicitly request camera permission before scanning
       final status = await Permission.camera.request();
@@ -42,7 +45,7 @@ class _ScanQrScreenState extends State<ScanQrScreen> {
       if (!mounted) return;
 
       if (status.isDenied || status.isPermanentlyDenied) {
-        _showError('Camera permission is required to scan QR codes');
+        _showError(l10n.cameraPermissionRequired);
         if (status.isPermanentlyDenied) {
           // Optional: Open settings if permanently denied
           // openAppSettings();
@@ -53,11 +56,11 @@ class _ScanQrScreenState extends State<ScanQrScreen> {
       // Launch the platform-native scanner (ZXing on Android, AVFoundation on iOS).
       // This is more robust than embedding a scanner widget on some hardware.
       final result = await BarcodeScanner.scan(
-        options: const ScanOptions(
+        options: ScanOptions(
           strings: {
-            'cancel': 'Cancel',
-            'flash_on': 'Flash On',
-            'flash_off': 'Flash Off',
+            'cancel': l10n.cancel,
+            'flash_on': l10n.flashOn,
+            'flash_off': l10n.flashOff,
           },
         ),
       );
@@ -70,16 +73,16 @@ class _ScanQrScreenState extends State<ScanQrScreen> {
         if (rawValue.startsWith('otpauth://')) {
           await _processUri(rawValue);
         } else {
-          _showError('Invalid QR Code: Not an authenticator URI');
+          _showError(l10n.invalidQrCode);
         }
       } else if (result.type == ResultType.Cancelled) {
         // If user presses the back button in the scanner, we exit this screen.
         Navigator.of(context).pop();
       } else if (result.type == ResultType.Error) {
-        _showError('Scan error: ${result.rawContent}');
+        _showError(l10n.scanError(result.rawContent));
       }
     } catch (e) {
-      _showError('Failed to start scanner: $e');
+      _showError(l10n.failedToStartScanner(e.toString()));
     } finally {
       // Always release the lock, even on failure, to allow manual retries.
       if (mounted) {
@@ -103,15 +106,16 @@ class _ScanQrScreenState extends State<ScanQrScreen> {
       ).addAccountObject(account);
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         if (success) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Added account: ${account.name}')),
+            SnackBar(content: Text(l10n.addedAccount(account.name))),
           );
-          Navigator.of(context).pop(); // Return to Home screen on success.
+          Navigator.of(context).pop();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Account already exists: ${account.name}'),
+              content: Text(l10n.accountAlreadyExists(account.name)),
               backgroundColor: Colors.orange,
             ),
           );
@@ -119,7 +123,8 @@ class _ScanQrScreenState extends State<ScanQrScreen> {
         }
       }
     } catch (e) {
-      _showError('Failed to add account: $e');
+      final l10n = AppLocalizations.of(context)!;
+      _showError(l10n.failedToAddAccount(e.toString()));
     }
   }
 
@@ -132,8 +137,9 @@ class _ScanQrScreenState extends State<ScanQrScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Scan QR Code')),
+      appBar: AppBar(title: Text(l10n.scanQrCode)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -143,7 +149,7 @@ class _ScanQrScreenState extends State<ScanQrScreen> {
             FilledButton.icon(
               onPressed: _isScanning ? null : _startScan,
               icon: const Icon(Icons.camera_alt),
-              label: const Text('Start Scanning'),
+              label: Text(l10n.startScanning),
             ),
           ],
         ),

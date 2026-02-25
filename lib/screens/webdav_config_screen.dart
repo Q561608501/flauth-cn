@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../providers/account_provider.dart';
@@ -77,7 +78,7 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
 
           if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Connection successful & Saved!')),
+            SnackBar(content: Text(AppLocalizations.of(context)!.connectionSuccessful)),
           );
           Navigator.of(context).pop();
         }
@@ -88,7 +89,7 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Connection failed: $e'),
+            content: Text(AppLocalizations.of(context)!.connectionFailed(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -103,7 +104,7 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
       'url': _urlController.text.trim(),
       'path': _pathController.text.trim(),
     };
-    if (config['url']!.isEmpty) return 'Please enter server URL';
+    if (config['url']!.isEmpty) return AppLocalizations.of(context)!.pleaseEnterServerUrl;
 
     final paths = WebDavService.getNormalizedPaths(config);
     return '${paths['baseUrl']}${paths['remotePath']}${WebDavService.fileName}';
@@ -120,8 +121,9 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('WebDAV Configuration')),
+      appBar: AppBar(title: Text(l10n.webdavConfiguration)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -131,43 +133,43 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
               children: [
                 TextFormField(
                   controller: _urlController,
-                  decoration: const InputDecoration(
-                    labelText: 'Server URL',
+                  decoration: InputDecoration(
+                    labelText: l10n.serverUrl,
                     hintText: 'https://dav.example.com/',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (v) =>
-                      v == null || v.isEmpty ? 'URL is required' : null,
+                      v == null || v.isEmpty ? l10n.urlIsRequired : null,
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _usernameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Username',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: l10n.username,
+                    border: const OutlineInputBorder(),
                   ),
                   validator: (v) =>
-                      v == null || v.isEmpty ? 'Username is required' : null,
+                      v == null || v.isEmpty ? l10n.usernameIsRequired : null,
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _passwordController,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: l10n.password,
+                    border: const OutlineInputBorder(),
                   ),
                   obscureText: true,
                   validator: (v) =>
-                      v == null || v.isEmpty ? 'Password is required' : null,
+                      v == null || v.isEmpty ? l10n.passwordIsRequired : null,
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _pathController,
-                  decoration: const InputDecoration(
-                    labelText: 'Remote Path (Optional)',
+                  decoration: InputDecoration(
+                    labelText: l10n.remotePath,
                     hintText: '/flauth_backups/',
-                    border: OutlineInputBorder(),
-                    helperText: 'Leave empty for root directory',
+                    border: const OutlineInputBorder(),
+                    helperText: l10n.leaveEmptyForRoot,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -186,7 +188,7 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Full Backup Path Preview:',
+                          l10n.fullBackupPathPreview,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -218,7 +220,7 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
                             width: 20,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : const Text('Test Connection & Save'),
+                        : Text(l10n.testConnectionAndSave),
                   ),
                 ),
               ],
