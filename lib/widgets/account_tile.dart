@@ -134,18 +134,17 @@ class _AccountTileState extends State<AccountTile> {
                             child: Text(
                               widget.account.issuer.isNotEmpty
                                   ? (_isCodeVisible
-                                      ? widget.account.issuer
-                                      : '${widget.account.issuer}'
-                                          ' (${widget.account.name})')
+                                        ? widget.account.issuer
+                                        : '${widget.account.issuer}'
+                                              ' (${widget.account.name})')
                                   : widget.account.name,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
+                              style: Theme.of(context).textTheme.titleLarge
                                   ?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color:
-                                    _isCodeVisible ? Colors.grey[600] : null,
-                              ),
+                                    fontWeight: FontWeight.bold,
+                                    color: _isCodeVisible
+                                        ? Colors.grey[600]
+                                        : null,
+                                  ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -164,12 +163,8 @@ class _AccountTileState extends State<AccountTile> {
                             padding: const EdgeInsets.only(top: 4.0),
                             child: Text(
                               widget.account.name,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                color: Colors.grey[600],
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.grey[600]),
                             ),
                           ),
                         const SizedBox(height: 12),
@@ -180,27 +175,24 @@ class _AccountTileState extends State<AccountTile> {
                           children: [
                             Text(
                               formattedCode,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium
+                              style: Theme.of(context).textTheme.headlineMedium
                                   ?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 2,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                   ),
                             ),
                             Text(
                               '${remainingSeconds}s',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
+                              style: Theme.of(context).textTheme.bodyMedium
                                   ?.copyWith(
-                                color: remainingSeconds < 6
-                                    ? Colors.red
-                                    : Colors.grey,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                    color: remainingSeconds < 6
+                                        ? Colors.red
+                                        : Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
                           ],
                         ),

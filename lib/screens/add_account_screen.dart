@@ -61,9 +61,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            l10n.addedAccount(issuer.isNotEmpty ? issuer : name),
-          ),
+          content: Text(l10n.addedAccount(issuer.isNotEmpty ? issuer : name)),
         ),
       );
       Navigator.of(context).pop();
@@ -71,9 +69,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            l10n.accountAlreadyExists(
-              issuer.isNotEmpty ? issuer : name,
-            ),
+            l10n.accountAlreadyExists(issuer.isNotEmpty ? issuer : name),
           ),
           backgroundColor: Colors.orange,
         ),

@@ -74,9 +74,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
                       } else {
                         // Mismatch
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(l10n.pinsDoNotMatch),
-                          ),
+                          SnackBar(content: Text(l10n.pinsDoNotMatch)),
                         );
                         setState(() {
                           _tempPin = ''; // Reset

@@ -79,7 +79,9 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              isLocked ? l10n.lockedForSeconds(secondsRemaining) : l10n.enterPin,
+              isLocked
+                  ? l10n.lockedForSeconds(secondsRemaining)
+                  : l10n.enterPin,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

@@ -203,7 +203,7 @@ abstract class AppLocalizations {
   /// No description provided for @biometricReason.
   ///
   /// In en, this message translates to:
-  /// **'Authenticate to access the app'**
+  /// **'Please authenticate to access Flauth'**
   String get biometricReason;
 
   /// No description provided for @usePinForBackup.
@@ -758,30 +758,82 @@ abstract class AppLocalizations {
   /// **'Connection failed: {error}'**
   String connectionFailed(String error);
 
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
   String get settings;
 
+  /// No description provided for @addAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Account'**
   String get addAccount;
 
+  /// No description provided for @addManually.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Manually'**
   String get addManually;
 
+  /// No description provided for @issuerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Issuer'**
   String get issuerLabel;
 
+  /// No description provided for @issuerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Google, GitHub'**
   String get issuerHint;
 
+  /// No description provided for @accountName.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Name'**
   String get accountName;
 
+  /// No description provided for @accountNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. user@example.com'**
   String get accountNameHint;
 
+  /// No description provided for @secretKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Secret Key'**
   String get secretKey;
 
+  /// No description provided for @secretKeyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Base32 encoded secret'**
   String get secretKeyHint;
 
+  /// No description provided for @secretKeyRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Secret key is required'**
   String get secretKeyRequired;
 
+  /// No description provided for @invalidSecretKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Base32 secret key'**
   String get invalidSecretKey;
 
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
   String get add;
 
+  /// No description provided for @tapToAddAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap + to add an account'**
   String get tapToAddAccount;
 }
 

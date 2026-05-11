@@ -150,8 +150,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
         }
       } catch (e) {
         _showSnackBar(
-          AppLocalizations.of(context)!
-              .encryptionFailed(e.toString()),
+          AppLocalizations.of(context)!.encryptionFailed(e.toString()),
           isError: true,
         );
         return null;
@@ -189,8 +188,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
         return BackupSecurityService.decrypt(content, password);
       } catch (e) {
         _showSnackBar(
-          AppLocalizations.of(context)!
-              .decryptionFailed(e.toString()),
+          AppLocalizations.of(context)!.decryptionFailed(e.toString()),
           isError: true,
         );
         return null;
@@ -211,7 +209,7 @@ class _ImportExportScreenState extends State<ImportExportScreen>
       final now = DateTime.now();
       final fileName =
           'otpauth-${DateFormat('yyyyMMdd-HHmmss').format(now)}'
-              '.${exportData.extension}';
+          '.${exportData.extension}';
 
       if (Platform.isAndroid) {
         // Android: Use System "Save As" dialog via SAF
@@ -316,11 +314,9 @@ class _ImportExportScreenState extends State<ImportExportScreen>
   }
 
   void _openWebDavConfig() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const WebDavConfigScreen(),
-      ),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const WebDavConfigScreen()));
   }
 
   Future<void> _handleWebDavUpload() async {

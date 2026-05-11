@@ -80,9 +80,7 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
           if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                AppLocalizations.of(context)!.connectionSuccessful,
-              ),
+              content: Text(AppLocalizations.of(context)!.connectionSuccessful),
             ),
           );
           Navigator.of(context).pop();
@@ -95,9 +93,7 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              AppLocalizations.of(context)!.connectionFailed(
-                e.toString(),
-              ),
+              AppLocalizations.of(context)!.connectionFailed(e.toString()),
             ),
             backgroundColor: Colors.red,
           ),
@@ -190,9 +186,9 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .surfaceContainerHighest,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
@@ -212,9 +208,9 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
                           style: TextStyle(
                             fontSize: 13,
                             fontFamily: 'monospace',
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurfaceVariant,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],
