@@ -6,8 +6,8 @@ import '../providers/auth_provider.dart';
 import '../models/account.dart';
 import '../widgets/account_tile.dart';
 import 'scan_qr_screen.dart';
-import 'import_export_screen.dart';
-import 'about_screen.dart';
+import 'add_account_screen.dart';
+import 'settings_screen.dart';
 import 'security_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -61,6 +61,57 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _showAddAccountSheet() {
+    final l10n = AppLocalizations.of(context)!;
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  l10n.addAccount,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.qr_code_scanner),
+                title: Text(l10n.scanQrCode),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ScanQrScreen(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.edit_outlined),
+                title: Text(l10n.addManually),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const AddAccountScreen(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -69,33 +120,20 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(l10n.appTitle),
         actions: [
           IconButton(
-            icon: const Icon(Icons.import_export),
-            tooltip: l10n.importExport,
+            icon: const Icon(Icons.settings_outlined),
+            tooltip: l10n.settings,
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const ImportExportScreen(),
+                  builder: (context) => const SettingsScreen(),
                 ),
               );
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.about,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const AboutScreen()),
-              );
-            },
-          ),
         ],
-        // Display a progress bar at the bottom of the AppBar.
-        // This gives a visual indication of when the code will expire.
         bottom: _AppBarProgress(),
       ),
       body: Selector<AccountProvider, List<Account>>(
-        // Optimization: Selector only triggers a rebuild if the returned value (List reference)
-        // changes. AccountProvider ensures this by creating a new list copy on every modification.
         selector: (_, p) => p.accounts,
         builder: (context, accounts, child) {
           if (accounts.isEmpty) {
@@ -112,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ).textTheme.titleLarge?.copyWith(color: Colors.grey),
                   ),
                   const SizedBox(height: 8),
-                  Text(l10n.tapToScanQr),
+                  Text(l10n.tapToAddAccount),
                 ],
               ),
             );
@@ -129,23 +167,16 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context, index) {
               final account = accounts[index];
               return Container(
-                key: ValueKey(
-                  account.id,
-                ), // Key is required for ReorderableListView
+                key: ValueKey(account.id),
                 child: AccountTile(account: account),
               );
             },
           );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.of(
-            context,
-          ).push(MaterialPageRoute(builder: (context) => const ScanQrScreen()));
-        },
-        icon: const Icon(Icons.qr_code_scanner),
-        label: Text(l10n.scan),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showAddAccountSheet,
+        child: const Icon(Icons.add),
       ),
     );
   }

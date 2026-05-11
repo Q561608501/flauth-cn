@@ -50,15 +50,14 @@ class AuthProvider with ChangeNotifier {
   }
 
   /// Trigger biometric authentication if enabled
-  Future<void> authenticateWithBiometrics() async {
+  Future<void> authenticateWithBiometrics({String localizedReason = ''}) async {
     if (!_isBiometricEnabled) return;
 
-    bool success = await _authService.authenticate();
+    bool success = await _authService.authenticate(localizedReason: localizedReason);
     if (success) {
       _status = AuthStatus.authenticated;
       notifyListeners();
     }
-    // If failed, status remains unauthenticated, UI should show PIN pad
   }
 
   Future<void> _resetLockout() async {

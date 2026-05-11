@@ -60,6 +60,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get biometricSubtitle => '使用面容 / 指纹识别';
 
   @override
+  String get biometricReason => '请验证身份以访问 Flauth';
+
+  @override
   String get usePinForBackup => '使用 PIN 码加密备份';
 
   @override
@@ -373,4 +376,43 @@ class AppLocalizationsZh extends AppLocalizations {
   String connectionFailed(String error) {
     return '连接失败：$error';
   }
+
+  @override
+  String get settings => '设置';
+
+  @override
+  String get addAccount => '添加账户';
+
+  @override
+  String get addManually => '手动添加';
+
+  @override
+  String get issuerLabel => '服务名称';
+
+  @override
+  String get issuerHint => '例如 Google、GitHub';
+
+  @override
+  String get accountName => '账户名';
+
+  @override
+  String get accountNameHint => '例如 user@example.com';
+
+  @override
+  String get secretKey => '密钥';
+
+  @override
+  String get secretKeyHint => 'Base32 编码的密钥';
+
+  @override
+  String get secretKeyRequired => '密钥不能为空';
+
+  @override
+  String get invalidSecretKey => '无效的 Base32 密钥';
+
+  @override
+  String get add => '添加';
+
+  @override
+  String get tapToAddAccount => '点击 + 添加账户';
 }
