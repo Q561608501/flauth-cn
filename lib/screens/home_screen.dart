@@ -75,7 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Text(
                   l10n.addAccount,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -145,9 +148,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 16),
                   Text(
                     l10n.noAccountsYet,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleLarge?.copyWith(color: Colors.grey),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(color: Colors.grey),
                   ),
                   const SizedBox(height: 8),
                   Text(l10n.tapToAddAccount),
@@ -196,9 +200,10 @@ class _AppBarProgress extends StatelessWidget implements PreferredSizeWidget {
         return LinearProgressIndicator(
           value: provider.progress,
           minHeight: 4.0,
-          backgroundColor: Theme.of(
-            context,
-          ).colorScheme.primaryContainer.withValues(alpha: 0.3),
+          backgroundColor: Theme.of(context)
+              .colorScheme
+              .primaryContainer
+              .withValues(alpha: 0.3),
           valueColor: AlwaysStoppedAnimation<Color>(
             provider.progress < 0.2
                 ? Colors.red

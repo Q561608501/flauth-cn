@@ -60,7 +60,8 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
       final basicAuth = 'Basic ${base64Encode(utf8.encode('$user:$pass'))}';
       final uri = Uri.parse(paths['baseUrl']!);
 
-      // Use PROPFIND with Depth: 0 to check if the root (or URL) exists/is accessible
+      // Use PROPFIND with Depth: 0 to check if the root
+      // (or URL) exists/is accessible
       // This is a standard WebDAV check.
       final client = http.Client();
       final request = http.Request('PROPFIND', uri)
@@ -78,7 +79,11 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
 
           if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(AppLocalizations.of(context)!.connectionSuccessful)),
+            SnackBar(
+              content: Text(
+                AppLocalizations.of(context)!.connectionSuccessful,
+              ),
+            ),
           );
           Navigator.of(context).pop();
         }
@@ -89,7 +94,11 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.connectionFailed(e.toString())),
+            content: Text(
+              AppLocalizations.of(context)!.connectionFailed(
+                e.toString(),
+              ),
+            ),
             backgroundColor: Colors.red,
           ),
         );
@@ -104,7 +113,9 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
       'url': _urlController.text.trim(),
       'path': _pathController.text.trim(),
     };
-    if (config['url']!.isEmpty) return AppLocalizations.of(context)!.pleaseEnterServerUrl;
+    if (config['url']!.isEmpty) {
+      return AppLocalizations.of(context)!.pleaseEnterServerUrl;
+    }
 
     final paths = WebDavService.getNormalizedPaths(config);
     return '${paths['baseUrl']}${paths['remotePath']}${WebDavService.fileName}';
@@ -179,9 +190,9 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.surfaceContainerHighest,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
@@ -201,9 +212,9 @@ class _WebDavConfigScreenState extends State<WebDavConfigScreen> {
                           style: TextStyle(
                             fontSize: 13,
                             fontFamily: 'monospace',
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurfaceVariant,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant,
                           ),
                         ),
                       ],

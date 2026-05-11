@@ -43,7 +43,10 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
 
     final issuer = _issuerController.text.trim();
     final name = _nameController.text.trim();
-    final secret = _secretController.text.trim().replaceAll(' ', '').toUpperCase();
+    final secret = _secretController.text
+        .trim()
+        .replaceAll(' ', '')
+        .toUpperCase();
 
     final success = await provider.addAccount(
       name.isNotEmpty ? name : issuer,
@@ -57,13 +60,21 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
 
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.addedAccount(issuer.isNotEmpty ? issuer : name))),
+        SnackBar(
+          content: Text(
+            l10n.addedAccount(issuer.isNotEmpty ? issuer : name),
+          ),
+        ),
       );
       Navigator.of(context).pop();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(l10n.accountAlreadyExists(issuer.isNotEmpty ? issuer : name)),
+          content: Text(
+            l10n.accountAlreadyExists(
+              issuer.isNotEmpty ? issuer : name,
+            ),
+          ),
           backgroundColor: Colors.orange,
         ),
       );
@@ -123,7 +134,10 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
                   return null;
                 },
                 textCapitalization: TextCapitalization.characters,
-                style: const TextStyle(fontFamily: 'monospace', letterSpacing: 1.5),
+                style: const TextStyle(
+                  fontFamily: 'monospace',
+                  letterSpacing: 1.5,
+                ),
               ),
               const SizedBox(height: 36),
               FilledButton.icon(

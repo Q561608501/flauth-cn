@@ -50,10 +50,14 @@ class AuthProvider with ChangeNotifier {
   }
 
   /// Trigger biometric authentication if enabled
-  Future<void> authenticateWithBiometrics({String localizedReason = ''}) async {
+  Future<void> authenticateWithBiometrics({
+    String localizedReason = '',
+  }) async {
     if (!_isBiometricEnabled) return;
 
-    bool success = await _authService.authenticate(localizedReason: localizedReason);
+    bool success = await _authService.authenticate(
+      localizedReason: localizedReason,
+    );
     if (success) {
       _status = AuthStatus.authenticated;
       notifyListeners();

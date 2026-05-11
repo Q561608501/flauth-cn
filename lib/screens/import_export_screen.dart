@@ -149,7 +149,11 @@ class _ImportExportScreenState extends State<ImportExportScreen>
           _showSnackBar(AppLocalizations.of(context)!.encryptedWithAppPin);
         }
       } catch (e) {
-        _showSnackBar(AppLocalizations.of(context)!.encryptionFailed(e.toString()), isError: true);
+        _showSnackBar(
+          AppLocalizations.of(context)!
+              .encryptionFailed(e.toString()),
+          isError: true,
+        );
         return null;
       }
     }
@@ -184,7 +188,11 @@ class _ImportExportScreenState extends State<ImportExportScreen>
       try {
         return BackupSecurityService.decrypt(content, password);
       } catch (e) {
-        _showSnackBar(AppLocalizations.of(context)!.decryptionFailed(e.toString()), isError: true);
+        _showSnackBar(
+          AppLocalizations.of(context)!
+              .decryptionFailed(e.toString()),
+          isError: true,
+        );
         return null;
       }
     }
@@ -202,10 +210,12 @@ class _ImportExportScreenState extends State<ImportExportScreen>
 
       final now = DateTime.now();
       final fileName =
-          'otpauth-${DateFormat('yyyyMMdd-HHmmss').format(now)}.${exportData.extension}';
+          'otpauth-${DateFormat('yyyyMMdd-HHmmss').format(now)}'
+              '.${exportData.extension}';
 
       if (Platform.isAndroid) {
-        // Android: Use System "Save As" dialog via SAF (Storage Access Framework)
+        // Android: Use System "Save As" dialog via SAF
+        // (Storage Access Framework)
         // 1. Write to temp file first
         final directory = await getTemporaryDirectory();
         final tempFile = File('${directory.path}/$fileName');
@@ -243,7 +253,10 @@ class _ImportExportScreenState extends State<ImportExportScreen>
       }
     } catch (e) {
       debugPrint('Export error: $e');
-      _showSnackBar(AppLocalizations.of(context)!.exportFailed(e.toString()), isError: true);
+      _showSnackBar(
+        AppLocalizations.of(context)!.exportFailed(e.toString()),
+        isError: true,
+      );
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -280,7 +293,10 @@ class _ImportExportScreenState extends State<ImportExportScreen>
       }
     } catch (e) {
       debugPrint('Import error: $e');
-      _showSnackBar(AppLocalizations.of(context)!.importFailed(e.toString()), isError: true);
+      _showSnackBar(
+        AppLocalizations.of(context)!.importFailed(e.toString()),
+        isError: true,
+      );
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -300,9 +316,11 @@ class _ImportExportScreenState extends State<ImportExportScreen>
   }
 
   void _openWebDavConfig() {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => const WebDavConfigScreen()));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const WebDavConfigScreen(),
+      ),
+    );
   }
 
   Future<void> _handleWebDavUpload() async {
@@ -331,7 +349,10 @@ class _ImportExportScreenState extends State<ImportExportScreen>
         throw Exception('Status ${response.statusCode}: ${response.body}');
       }
     } catch (e) {
-      _showSnackBar(AppLocalizations.of(context)!.uploadFailed(e.toString()), isError: true);
+      _showSnackBar(
+        AppLocalizations.of(context)!.uploadFailed(e.toString()),
+        isError: true,
+      );
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -367,7 +388,10 @@ class _ImportExportScreenState extends State<ImportExportScreen>
         throw Exception('Status ${response.statusCode}: ${response.body}');
       }
     } catch (e) {
-      _showSnackBar(AppLocalizations.of(context)!.downloadFailed(e.toString()), isError: true);
+      _showSnackBar(
+        AppLocalizations.of(context)!.downloadFailed(e.toString()),
+        isError: true,
+      );
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -617,8 +641,9 @@ class _SetPasswordDialogState extends State<_SetPasswordDialog> {
                 border: const OutlineInputBorder(),
               ),
               obscureText: true,
-              validator: (val) =>
-                  (val == null || val.length < 6) ? l10n.minSixCharacters : null,
+              validator: (val) => (val == null || val.length < 6)
+                  ? l10n.minSixCharacters
+                  : null,
             ),
             const SizedBox(height: 16),
             TextFormField(

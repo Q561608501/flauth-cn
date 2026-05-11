@@ -48,7 +48,10 @@ class AboutScreen extends StatelessWidget {
               Center(
                 child: Text(
                   'Flauth',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium
+                      ?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -57,9 +60,10 @@ class AboutScreen extends StatelessWidget {
               Center(
                 child: Text(
                   version,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: Colors.grey),
                 ),
               ),
               const SizedBox(height: 32),
@@ -99,9 +103,10 @@ class AboutScreen extends StatelessWidget {
               Center(
                 child: Text(
                   '© ${DateTime.now().year} Jiacai Liu',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: Colors.grey),
                 ),
               ),
               const SizedBox(height: 20),

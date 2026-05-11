@@ -21,11 +21,11 @@ class AuthService {
         return true;
       }
 
-      return await _auth.authenticate(
-        localizedReason: localizedReason.isNotEmpty
-            ? localizedReason
-            : 'Please authenticate to access Flauth',
-      );
+      final reason = localizedReason.isNotEmpty
+          ? localizedReason
+          : 'Please authenticate to access Flauth';
+
+      return await _auth.authenticate(localizedReason: reason);
     } on PlatformException {
       return false;
     } catch (e) {

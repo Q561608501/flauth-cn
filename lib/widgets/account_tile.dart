@@ -134,18 +134,25 @@ class _AccountTileState extends State<AccountTile> {
                             child: Text(
                               widget.account.issuer.isNotEmpty
                                   ? (_isCodeVisible
-                                        ? widget.account.issuer
-                                        : '${widget.account.issuer} (${widget.account.name})')
+                                      ? widget.account.issuer
+                                      : '${widget.account.issuer}'
+                                          ' (${widget.account.name})')
                                   : widget.account.name,
-                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: _isCodeVisible ? Colors.grey[600] : null,
+                                color:
+                                    _isCodeVisible ? Colors.grey[600] : null,
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           Icon(
-                            _isCodeVisible ? Icons.visibility : Icons.visibility_off,
+                            _isCodeVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
                             size: 20,
                             color: Colors.grey.withValues(alpha: 0.5),
                           ),
@@ -157,7 +164,10 @@ class _AccountTileState extends State<AccountTile> {
                             padding: const EdgeInsets.only(top: 4.0),
                             child: Text(
                               widget.account.name,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
                                 color: Colors.grey[600],
                               ),
                             ),
@@ -170,16 +180,22 @@ class _AccountTileState extends State<AccountTile> {
                           children: [
                             Text(
                               formattedCode,
-                              style: Theme.of(context).textTheme.headlineMedium
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
                                   ?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 2,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                             ),
                             Text(
                               '${remainingSeconds}s',
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
                                 color: remainingSeconds < 6
                                     ? Colors.red
                                     : Colors.grey,

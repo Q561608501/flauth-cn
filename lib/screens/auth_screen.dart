@@ -109,7 +109,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     showBiometricButton: auth.isBiometricEnabled && !isLocked,
                     onBiometricPressed: () {
                       final l10n = AppLocalizations.of(context)!;
-                      auth.authenticateWithBiometrics(localizedReason: l10n.biometricReason);
+                      auth.authenticateWithBiometrics(
+                        localizedReason: l10n.biometricReason,
+                      );
                     },
                   ),
                 ),

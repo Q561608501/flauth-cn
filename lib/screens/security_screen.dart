@@ -40,7 +40,9 @@ class _SecurityScreenState extends State<SecurityScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                _tempPin.isEmpty ? l10n.enterSixDigitPin : l10n.reEnterToConfirm,
+                _tempPin.isEmpty
+                    ? l10n.enterSixDigitPin
+                    : l10n.reEnterToConfirm,
                 style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 32),
