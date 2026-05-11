@@ -18,7 +18,6 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   void initState() {
     super.initState();
-    // Start a timer to refresh UI only when a lockout is active
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       final auth = Provider.of<AuthProvider>(context, listen: false);
       if (auth.lockoutEndTime != null) {
@@ -26,11 +25,11 @@ class _AuthScreenState extends State<AuthScreen> {
       }
     });
 
-    // Try biometrics automatically if enabled
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final l10n = AppLocalizations.of(context)!;
       final auth = Provider.of<AuthProvider>(context, listen: false);
       if (auth.isBiometricEnabled) {
-        auth.authenticateWithBiometrics();
+        auth.authenticateWithBiometrics(localizedReason: l10n.biometricReason);
       }
     });
   }
@@ -108,7 +107,10 @@ class _AuthScreenState extends State<AuthScreen> {
                     pinLength: 6, // Changed to 6-digit PIN
                     onSubmit: _handlePinSubmit,
                     showBiometricButton: auth.isBiometricEnabled && !isLocked,
-                    onBiometricPressed: () => auth.authenticateWithBiometrics(),
+                    onBiometricPressed: () {
+                      final l10n = AppLocalizations.of(context)!;
+                      auth.authenticateWithBiometrics(localizedReason: l10n.biometricReason);
+                    },
                   ),
                 ),
               ),

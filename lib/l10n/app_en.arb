@@ -21,6 +21,7 @@
   "changePin": "Change PIN",
   "biometricUnlock": "Biometric Unlock",
   "biometricSubtitle": "Use FaceID / Fingerprint",
+  "biometricReason": "Please authenticate to access Flauth",
   "usePinForBackup": "Use PIN for Backup",
   "usePinForBackupSubtitle": "Automatically use your App PIN to encrypt/decrypt backups",
   "setNewPin": "Set New PIN",

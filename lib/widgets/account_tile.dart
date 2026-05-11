@@ -4,6 +4,7 @@ import 'package:flauth/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../models/account.dart';
 import '../providers/account_provider.dart';
+import '../services/icon_service.dart';
 
 class AccountTile extends StatefulWidget {
   final Account account;
@@ -20,19 +21,22 @@ class _AccountTileState extends State<AccountTile> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    // Optimization: Only rebuild when remainingSeconds changes (once per second)
     final remainingSeconds = context.select<AccountProvider, int>(
       (p) => p.remainingSeconds,
     );
     final provider = Provider.of<AccountProvider>(context, listen: false);
     final code = provider.getCurrentCode(widget.account.secret);
 
-    // Format code for readability (e.g., "123 456")
     final formattedCode = code.length == 6
         ? '${code.substring(0, 3)} ${code.substring(3)}'
         : code;
 
-    // Dismissible allows the user to swipe the tile to delete the account.
+    final issuer = widget.account.issuer.isNotEmpty
+        ? widget.account.issuer
+        : widget.account.name;
+    final iconData = IconService.getIconForIssuer(issuer);
+    final avatarColor = IconService.getColorForIssuer(issuer);
+
     return Dismissible(
       key: Key(widget.account.id),
       background: Container(
@@ -94,72 +98,100 @@ class _AccountTileState extends State<AccountTile> {
               horizontal: 16.0,
               vertical: 20.0,
             ),
-            child: Column(
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        widget.account.issuer.isNotEmpty
-                            ? (_isCodeVisible
-                                  ? widget.account.issuer
-                                  : '${widget.account.issuer} (${widget.account.name})')
-                            : widget.account.name,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: _isCodeVisible ? Colors.grey[600] : null,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Icon(
-                      _isCodeVisible ? Icons.visibility : Icons.visibility_off,
-                      size: 20,
-                      color: Colors.grey.withValues(alpha: 0.5),
-                    ),
-                  ],
-                ),
-                if (_isCodeVisible) ...[
-                  if (widget.account.issuer.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Text(
-                        widget.account.name,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Text(
-                        formattedCode,
-                        style: Theme.of(context).textTheme.headlineMedium
-                            ?.copyWith(
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: avatarColor.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: iconData != null
+                        ? Icon(iconData, color: avatarColor, size: 24)
+                        : Text(
+                            IconService.getInitial(issuer),
+                            style: TextStyle(
+                              color: avatarColor,
                               fontWeight: FontWeight.bold,
-                              letterSpacing: 2,
-                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 20,
                             ),
+                          ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              widget.account.issuer.isNotEmpty
+                                  ? (_isCodeVisible
+                                        ? widget.account.issuer
+                                        : '${widget.account.issuer} (${widget.account.name})')
+                                  : widget.account.name,
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: _isCodeVisible ? Colors.grey[600] : null,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Icon(
+                            _isCodeVisible ? Icons.visibility : Icons.visibility_off,
+                            size: 20,
+                            color: Colors.grey.withValues(alpha: 0.5),
+                          ),
+                        ],
                       ),
-                      Text(
-                        '${remainingSeconds}s',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: remainingSeconds < 6
-                              ? Colors.red
-                              : Colors.grey,
-                          fontWeight: FontWeight.bold,
+                      if (_isCodeVisible) ...[
+                        if (widget.account.issuer.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: Text(
+                              widget.account.name,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              formattedCode,
+                              style: Theme.of(context).textTheme.headlineMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 2,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                            ),
+                            Text(
+                              '${remainingSeconds}s',
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: remainingSeconds < 6
+                                    ? Colors.red
+                                    : Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
+                      ],
                     ],
                   ),
-                ],
+                ),
               ],
             ),
           ),

@@ -12,7 +12,7 @@ class AuthService {
     }
   }
 
-  Future<bool> authenticate() async {
+  Future<bool> authenticate({String localizedReason = ''}) async {
     try {
       final bool canCheckBiometrics = await _auth.canCheckBiometrics;
       final bool isDeviceSupported = await _auth.isDeviceSupported();
@@ -22,10 +22,11 @@ class AuthService {
       }
 
       return await _auth.authenticate(
-        localizedReason: 'Please authenticate to access Flauth',
+        localizedReason: localizedReason.isNotEmpty
+            ? localizedReason
+            : 'Please authenticate to access Flauth',
       );
     } on PlatformException {
-      // Biometrics not available or other error
       return false;
     } catch (e) {
       return false;

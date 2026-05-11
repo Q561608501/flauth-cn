@@ -21,6 +21,7 @@
   "changePin": "更改 PIN 码",
   "biometricUnlock": "生物识别解锁",
   "biometricSubtitle": "使用面容 / 指纹识别",
+  "biometricReason": "请验证身份以访问 Flauth",
   "usePinForBackup": "使用 PIN 码加密备份",
   "usePinForBackupSubtitle": "自动使用应用 PIN 码加密/解密备份文件",
   "setNewPin": "设置新 PIN 码",
