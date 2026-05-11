@@ -217,5 +217,19 @@
     "placeholders": {
       "error": { "type": "String" }
     }
-  }
+  },
+
+  "settings": "Settings",
+  "addAccount": "Add Account",
+  "addManually": "Add Manually",
+  "issuerLabel": "Issuer",
+  "issuerHint": "e.g. Google, GitHub",
+  "accountName": "Account Name",
+  "accountNameHint": "e.g. user@example.com",
+  "secretKey": "Secret Key",
+  "secretKeyHint": "Base32 encoded secret",
+  "secretKeyRequired": "Secret key is required",
+  "invalidSecretKey": "Invalid Base32 secret key",
+  "add": "Add",
+  "tapToAddAccount": "Tap + to add an account"
 }

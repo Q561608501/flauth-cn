@@ -121,5 +121,19 @@
   "passwordIsRequired": "密码不能为空",
   "testConnectionAndSave": "测试连接并保存",
   "connectionSuccessful": "连接成功，已保存！",
-  "connectionFailed": "连接失败：{error}"
+  "connectionFailed": "连接失败：{error}",
+
+  "settings": "设置",
+  "addAccount": "添加账户",
+  "addManually": "手动添加",
+  "issuerLabel": "服务名称",
+  "issuerHint": "例如 Google、GitHub",
+  "accountName": "账户名",
+  "accountNameHint": "例如 user@example.com",
+  "secretKey": "密钥",
+  "secretKeyHint": "Base32 编码的密钥",
+  "secretKeyRequired": "密钥不能为空",
+  "invalidSecretKey": "无效的 Base32 密钥",
+  "add": "添加",
+  "tapToAddAccount": "点击 + 添加账户"
 }

@@ -61,6 +61,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biometricSubtitle => 'Use FaceID / Fingerprint';
 
   @override
+  String get biometricReason => 'Please authenticate to access Flauth';
+
+  @override
   String get usePinForBackup => 'Use PIN for Backup';
 
   @override
@@ -383,4 +386,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String connectionFailed(String error) {
     return 'Connection failed: $error';
   }
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get addAccount => 'Add Account';
+
+  @override
+  String get addManually => 'Add Manually';
+
+  @override
+  String get issuerLabel => 'Issuer';
+
+  @override
+  String get issuerHint => 'e.g. Google, GitHub';
+
+  @override
+  String get accountName => 'Account Name';
+
+  @override
+  String get accountNameHint => 'e.g. user@example.com';
+
+  @override
+  String get secretKey => 'Secret Key';
+
+  @override
+  String get secretKeyHint => 'Base32 encoded secret';
+
+  @override
+  String get secretKeyRequired => 'Secret key is required';
+
+  @override
+  String get invalidSecretKey => 'Invalid Base32 secret key';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get tapToAddAccount => 'Tap + to add an account';
 }

@@ -20,7 +20,8 @@ class ExportData {
 }
 
 class ImportExportScreen extends StatefulWidget {
-  const ImportExportScreen({super.key});
+  final int initialTab;
+  const ImportExportScreen({super.key, this.initialTab = 0});
 
   @override
   State<ImportExportScreen> createState() => _ImportExportScreenState();
@@ -37,7 +38,11 @@ class _ImportExportScreenState extends State<ImportExportScreen>
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex: widget.initialTab.clamp(0, 1),
+    );
     _tabController.addListener(() {
       if (_tabController.index == 1 && _lastCloudBackupTime == null) {
         _fetchLastCloudBackupTime();

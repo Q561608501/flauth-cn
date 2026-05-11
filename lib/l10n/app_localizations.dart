@@ -200,6 +200,12 @@ abstract class AppLocalizations {
   /// **'Use FaceID / Fingerprint'**
   String get biometricSubtitle;
 
+  /// No description provided for @biometricReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate to access the app'**
+  String get biometricReason;
+
   /// No description provided for @usePinForBackup.
   ///
   /// In en, this message translates to:
@@ -751,6 +757,32 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connection failed: {error}'**
   String connectionFailed(String error);
+
+  String get settings;
+
+  String get addAccount;
+
+  String get addManually;
+
+  String get issuerLabel;
+
+  String get issuerHint;
+
+  String get accountName;
+
+  String get accountNameHint;
+
+  String get secretKey;
+
+  String get secretKeyHint;
+
+  String get secretKeyRequired;
+
+  String get invalidSecretKey;
+
+  String get add;
+
+  String get tapToAddAccount;
 }
 
 class _AppLocalizationsDelegate
