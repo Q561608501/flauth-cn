@@ -26,18 +26,16 @@ class IconService {
     'vercel': Icons.speed,
     'gitlab': Icons.merge_type,
     'bitbucket': Icons.source,
-    'steam': Icons.games_outlined,
+    'steam': Icons.games,
     'epic games': Icons.sports_esports_outlined,
     'battle.net': Icons.shield_outlined,
     'riot': Icons.security,
-    'steam': Icons.games,
     'okta': Icons.vpn_key_outlined,
     '1password': Icons.key,
     'lastpass': Icons.lock_outline,
     'bitwarden': Icons.lock,
     'duo': Icons.phone_android,
     'authy': Icons.smartphone,
-    'lastpass': Icons.password,
   };
 
   static IconData? getIconForIssuer(String issuer) {
