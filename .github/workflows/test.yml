@@ -27,9 +27,14 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Run formatter
+      - name: Format and commit if needed
         run: |
-          dart format --set-exit-if-changed lib
+          dart format lib
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add lib
+          git diff --cached --quiet || git commit -m "style: auto-format with dart format"
+          git push
 
       - name: Run linter
         run: |
