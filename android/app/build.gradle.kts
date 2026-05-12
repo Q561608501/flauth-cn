@@ -10,8 +10,13 @@ plugins {
 
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
+var hasSigningConfig = false
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+    hasSigningConfig = keystoreProperties["keyAlias"] != null &&
+                       keystoreProperties["keyPassword"] != null &&
+                       keystoreProperties["storeFile"] != null &&
+                       keystoreProperties["storePassword"] != null
 }
 
 android {
@@ -53,7 +58,7 @@ android {
     }
 
     signingConfigs {
-        if (keystorePropertiesFile.exists()) {
+        if (hasSigningConfig) {
             create("release") {
                 keyAlias = keystoreProperties["keyAlias"] as String
                 keyPassword = keystoreProperties["keyPassword"] as String
@@ -65,7 +70,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig = if (keystorePropertiesFile.exists()) {
+            signingConfig = if (hasSigningConfig) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")
